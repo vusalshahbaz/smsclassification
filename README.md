@@ -4,9 +4,9 @@ A production-ready, high-accuracy SMS classification system that combines featur
 
 ## ✨ Features
 
-- **🎯 High Accuracy**: 93.9% accuracy on test data
+- **🎯 High Accuracy**: 93.9% accuracy on test data (88.1% Stage 1 with weighted features)
 - **🔀 Two-Stage Classification**: Intelligent uncertainty detection
-- **📊 40 Enhanced Features**: Advanced pattern detection and obfuscation analysis
+- **📊 38 Enhanced Features**: Advanced pattern detection with strategic weighting
 - **⚡ Real-time Performance**: ~0.7ms average processing time
 - **🛡️ Security Focus**: Excellent smishing detection (85.0% F1-score)
 - **🔧 Production Ready**: Clean API, comprehensive testing, detailed documentation
@@ -15,12 +15,13 @@ A production-ready, high-accuracy SMS classification system that combines featur
 
 ### Modular Design
 The system is split into two main modules:
-- **`sms_feature_extractor.py`**: Standalone feature extraction with 40 enhanced features
+- **`sms_feature_extractor.py`**: Standalone feature extraction with 38 enhanced features
 - **`sms_classifier_hybrid.py`**: Complete hybrid classification system
 
 ### Stage 1: Feature-Based Classification
-- **40 Enhanced Features**: Text length, word count, pattern detection, obfuscation detection
-- **Risk Scoring**: Weighted features based on effectiveness analysis
+- **38 Enhanced Features**: 31 base features + 7 weighted features for optimal performance
+- **Weighted Features**: Strategic weighting of high-impact features (URL 3x, phone 2x, etc.)
+- **Risk Scoring**: Combined weighted features for threat assessment
 - **Smishing Detection**: Bank keywords, action words, alert phrases
 - **Obfuscation Detection**: L33t speak, special character insertion, brand obfuscation
 
@@ -176,9 +177,9 @@ Detect obfuscation patterns in the message.
 
 ### Overall Performance
 - **Combined System Accuracy**: 93.9%
-- **Stage 1 Individual Accuracy**: 87.0%
+- **Stage 1 Individual Accuracy**: 88.1% (with weighted features)
 - **Stage 2 Individual Accuracy**: 93.3%
-- **Improvement over Stage 1**: +7.0%
+- **Improvement over Stage 1**: +5.7%
 - **Average Processing Time**: 0.7ms
 
 ### Class-Specific Performance

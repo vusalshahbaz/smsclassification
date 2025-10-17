@@ -331,10 +331,11 @@ class SmsFeatureExtractor:
         return features
     
     def get_feature_vector(self) -> List[float]:
-        """Get feature vector for ML models."""
+        """Get feature vector for ML models with weighted features."""
         features = self.get_all_features()
-        # Return only the numerical features (exclude risk_score for now)
-        feature_names = [
+        
+        # Base features (unweighted)
+        base_feature_names = [
             'message_length', 'word_count', 'digit_count', 'uppercase_ratio',
             'special_char_count', 'url_presence', 'phone_presence', 'email_presence',
             'currency_presence', 'obfuscation_presence', 'urgent_keyword_count',
@@ -346,4 +347,23 @@ class SmsFeatureExtractor:
             'smishing_phrase_count', 'brand_obfuscation_count', 'bank_action_combo',
             'alert_action_combo', 'brand_action_combo'
         ]
-        return [features[name] for name in feature_names]
+        
+        # Start with base features
+        feature_vector = [features[name] for name in base_feature_names]
+        
+        # Add weighted versions of important features (based on analysis)
+        weighted_features = [
+            ('url_presence', 3),           # High impact for smishing
+            ('phone_presence', 2),         # High correlation (0.608)
+            ('urgent_keyword_count', 2),   # Important for urgency detection
+            ('obfuscation_presence', 2),   # Important for obfuscation detection
+            ('suspicious_domain_presence', 4),  # High impact for security
+            ('smishing_phrase_count', 3),  # Critical for smishing detection
+            ('brand_obfuscation_count', 2) # Important for brand spoofing
+        ]
+        
+        for feature_name, weight in weighted_features:
+            weighted_value = features[feature_name] * weight
+            feature_vector.append(weighted_value)
+        
+        return feature_vector
